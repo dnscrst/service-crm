@@ -14,7 +14,7 @@ pipelines:
   #          - npm install
   #          - npm run build
   branches:
-   master:
+   development:
       - step:
           deployment: production
           caches:
@@ -29,7 +29,7 @@ pipelines:
                 EXTRA_ARGS: '-P 4423'
                 REMOTE_PATH: '/var/www/staging-service-crm'
                 LOCAL_PATH: 'dist/*'
-   development:
+   master:
       - step:
           deployment: production
           caches:
