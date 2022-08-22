@@ -1,5 +1,6 @@
 import axios from "axios";
 import router from "@/router";
+import api from "../api"
 
 export const state = {
     user: {}
@@ -7,9 +8,9 @@ export const state = {
 export const actions = {
     async login ({commit}, user) {
         try {
-            const {data} = await axios.post('/api/auth/login', user);
+            const {data} = await axios.post(api.login, user);
             commit("SET_USER", data)
-            await router.push('/');
+            await router.push('/?page=1');
         } catch (error) {
             console.log(error);
         }
@@ -20,10 +21,10 @@ export const actions = {
                 next()
                 return
             }
-            const {data} = await axios.get('/api/auth/check-login');
+            const {data} = await axios.get(api.checkLogin);
             commit("SET_USER", data)
-            data.name ?next() : next('/login')
-            // next()
+            // data.name ?next() : next('/login')
+             next()
         } catch (error) {
             next('/login')
         }

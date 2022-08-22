@@ -1,5 +1,5 @@
 <template>
-  <section class="login-page">
+  <div class="login-page">
     <div class="login-container">
       <h1>Login</h1>
        <form @submit.prevent="handleLogin">
@@ -16,11 +16,10 @@
           <button>Ok</button>
        </form>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
   name: "Login",
   data() {

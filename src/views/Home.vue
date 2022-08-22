@@ -1,84 +1,106 @@
 <template>
-  <div class="home">
-    <div class="header">
-      <form class="search-bar">
-        <input type="text" placeholder="Cauta dupa nume sau telefon">
-        <button id="search-button" type="submit">
-          <img src="../assets/search-img.png" alt="search-img">
-        </button>
-      </form>
+  <div class="home-page">
+    <header class="header">
+      <SearchBar @handle-search="handleSearch"/>
       <button id="logout-button" type="button">
-        <img src="../assets/logout-img.png">
+        <img src="../assets/logout-img.png" alt="logout-img">
       </button>
-      
-    </div>
-    <table class="data-table">
-      <thead id="table-head">
-        <tr>
-          <th>Nume</th>
-          <th>Telefon</th>
-          <th>Oraș, județ</th>
-          <th>Tip activitate</th>
-          <th>Status</th>
-        </tr>
-      </thead>
-      <tbody>
-       <tr v-for="service in getData.results" key="service" >
-          <td>{{ service.name }}</td>
-          <td>{{ service.phone }}</td>
-          <td>{{ service.address }}</td>
-<!--        <td>{{ service.activity }}</td>-->
-          <td>{{ service.details.status }}</td>
-        </tr>
-      </tbody>
-    </table>
+    </header>
+    <ServiceTable :services="getData"/>
+    <span v-if="getLoading">Se incarca...</span>
     <div class="change-page-buttons">
-      <button @click="handleFirstPage()"> &lt&lt</button>
-      <button @click="handleBackPage()"> &lt</button>
-      <span> Page number</span>
-      <button @click="handleNextPage()">&gt</button>
-      <button @click="handleLastPage()">&gt&gt</button>
+      <button :disabled="this.service.page === 1"
+              @click="handlePagination('first')">&lt&lt</button>
+      <button :disabled="this.service.page === 1"
+              @click="handlePagination('back')"> &lt</button>
+      <span>{{service.page}}</span>
+      <button :disabled="this.service.page === this.getData.pages"
+              @click="handlePagination('next')">&gt</button>
+      <button :disabled="this.service.page === this.getData.pages"
+              @click="handlePagination('last')">&gt&gt</button>
     </div>
   </div>
 </template>
 
 <script>
+import ServiceTable from "@/components/ServiceTable";
+import SearchBar from "@/components/SearchBar";
 export default {
   name: "Home",
+  components: {SearchBar, ServiceTable},
   data () {
     return {
       service: {
         name: "",
-        phone: "",
+        phone: null,
         city: "",
         activity: "",
         status: "",
-        page: ""
+        page: 1
       }
     }
   },
   computed: {
      getData () {
        return this.$store.state.data.service
-     }
+     },
+    getLoading () {
+       return this.$store.state.data.loading
+    }
   },
-  mounted() {
-    this.$store.dispatch("getData")
+  created() {
+    const query = this.$route.query
+    this.service.page = +this.$route.query.page
+    this.$store.dispatch("getData", query)
   },
   methods: {
-    handleFirstPage(ev) {
-      this.$store.dispatch("getData", this.service)
-    },
-    handleBackPage(ev) {
-      this.$store.dispatch("getData", this.service)
-    },
-    handleNextPage(ev) {
-      this.$store.dispatch("getData", this.service)
-    },
-    handleLastPage(ev) {
-      this.$store.dispatch("getData", this.service)
-    }
 
+    handlePagination(dir) {
+      switch (dir) {
+        case 'next':
+          this.service.page +=1
+          break
+
+        case 'back':
+          this.service.page -=1
+          break
+
+        case 'last':
+          this.service.page = this.getData.pages
+          break
+
+        case 'first':
+          this.service.page = 1
+          break
+      }
+      const currentQuery = this.$route.query
+      const query = {...currentQuery, page: this.service.page}
+      this.$router.push({ path: '/', query: query})
+      this.$store.dispatch("getData", query)
+
+    },
+    handleSearch(value) {
+      if (!value) {
+        this.service.name = ''
+        this.service.phone= null
+      }
+      else if(isNaN(value)) {
+        this.service.name = value
+        this.service.phone= null
+      }
+      else {
+        this.service.phone= value
+        this.service.name = ''
+      }
+      const query = {...this.service, page: 1}
+      for (const [key, value] of Object.entries(query)) {
+        if (!value) delete query[key]
+      }
+      this.$router.push({path: '/', query})
+      this.service.page = 1
+      this.$store.dispatch('getData', this.service)
+
+    }
   }
 }
 // @ is an alias to /src
@@ -88,12 +110,15 @@ export default {
 <style lang="scss" >
 @import '../styles/base.scss';
 @import '../styles/vars.scss';
-.home{
+.home-page{
   background-color: $light-grey;
   background-size: cover;
-  height: 100em;
-  padding: 20px 120px;
-  .header{
+  //height: 100%;
+  padding: 30px 70px;
+  margin-bottom: auto;
+  background-repeat: no-repeat;
+
+  header{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -105,7 +130,7 @@ export default {
 
       }
       input{
-        width: 1150px;
+        width: 1250px;
         height: 38px;
         border: 1px solid $turquoise;
         padding: 0 15px;
@@ -132,43 +157,18 @@ export default {
       }
     }
   }
-  table{
-    width: 100%;
-    margin-top: 30px;
-    text-align: left;
-    color: $medium-black;
-    font-size: 12px;
-    thead{
-      background-color: white;
-    }
-    tr{
-      height: 45px;
-      border-bottom: 1px solid $medium-grey;
-      box-shadow:0px 2px 5px rgb(50 50 50 / 25%);
-      >td,th{
-        padding-left: 50px;
-      }
-      td{
-        font-weight: 600;
-      }
-      th{
-        font-weight: 300;
-      }
-      :last-child{
-        padding-right: 50px;
-      }
 
-    }
-
-
-
-  }
   .change-page-buttons{
     margin-top: 20px;
+    margin-bottom: auto;
     text-align: center;
+    font-size: 16px;
     button{
       border: 0;
       margin:0 3px;
+    }
+    span{
+      margin: 0 5px;
     }
   }
 }

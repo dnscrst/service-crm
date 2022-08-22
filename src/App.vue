@@ -1,8 +1,7 @@
 <template>
   <main class="app">
-
+    <router-view />
   </main>
-  <router-view />
 </template>
 
 <style lang="scss">
