@@ -122,30 +122,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
-    .search-bar{
-      input, button{
-        height: 40px;
-        float: left;
-        box-shadow:0 2px 5px rgb(50 50 50 / 25%);
 
-      }
-      input{
-        width: 1250px;
-        height: 38px;
-        border: 1px solid $turquoise;
-        padding: 0 15px;
-      }
-      #search-button{
-        width: 50px;
-        background-color: $dark-green;
-        border: 2px solid $dark-green;
-        border-radius: 0 5px 5px 0;
-        height: 40px;
-        img{
-          width: 25px;
-        }
-      }
-    }
     #logout-button{
       border: none;
       background-color: $light-grey;
@@ -157,7 +134,6 @@ export default {
       }
     }
   }
-
   .change-page-buttons{
     margin-top: 20px;
     margin-bottom: auto;
