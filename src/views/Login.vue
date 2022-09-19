@@ -7,12 +7,13 @@
           <input
               v-model="user.username"
               type="text"
-              placeholder="Username"> <br>
+              placeholder="Username"><br>
           <label for="password">Password </label> <br>
           <input
               v-model="user.password"
               type="password"
-              placeholder="Password"> <br>
+              placeholder="Password"
+              autocomplete="on"> <br>
           <button>Ok</button>
        </form>
     </div>
@@ -55,7 +56,7 @@ export default {
   .login-container{
     background: white;
     display: inline-block;
-    width: 270px;
+    width: auto;
     padding: 46px 32px;
     margin-bottom: 60px;
     justify-content: center;
@@ -81,13 +82,13 @@ export default {
       background-color: $dark-white;
       color: $medium-grey;
       box-shadow:inset 0px 2px 5px rgb(50 50 50 / 25%);
-      max-width: 270px;
+      //max-width: 270px;
       font-size: 14px;
     }
     button{
       background-color: $dark-grey;
       color: white;
-      width: 272px;
+      //width: 272px;
       box-shadow:0px 2px 5px rgb(50 50 50 / 25%);
     }
   }

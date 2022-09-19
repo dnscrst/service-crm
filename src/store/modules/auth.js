@@ -23,15 +23,22 @@ export const actions = {
             }
             const {data} = await axios.get(api.checkLogin);
             commit("SET_USER", data)
-            // data.name ?next() : next('/login')
-             next()
+            next()
         } catch (error) {
             next('/login')
+        }
+    },
+    async logout ({commit}, user){
+        try{
+            await axios.delete(api.logout);
+            await router.push('/login');
+        } catch (error){
+            console.log(error)
         }
     }
 }
 export const mutations = {
     SET_USER (state, user) {
         state.user = user
-    }
+    },
 }

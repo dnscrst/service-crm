@@ -5,12 +5,10 @@
            placeholder="Cauta dupa nume sau telefon">
     <button
           @click="handleResetSearch"
-          id="reset-button"
-          type="submit">X</button>
+          id="reset-button">X</button>
     <button
           @click="handleSearch"
-          id="search-button"
-          type="submit">
+          id="search-button">
            <img src="../assets/search-img.png"
               alt="search-img">
     </button>
@@ -41,9 +39,10 @@
   @import '../styles/base.scss';
   @import '../styles/vars.scss';
   .search-bar{
+    display: flex;
+    align-items: center;
     input, #search-button{
       height: 40px;
-      float: left;
       box-shadow:0 2px 5px rgb(50 50 50 / 25%);
     }
     #reset-button {
@@ -52,7 +51,7 @@
       background-color: white;
       position: absolute;
       top: 42px;
-      right: 195px;
+      right: 225px;
     }
     input{
       width: 1250px;
@@ -68,7 +67,7 @@
       border-radius: 0 5px 5px 0;
       height: 40px;
       img{
-        width: 25px;
+        width: 23px;
       }
     }
   }
