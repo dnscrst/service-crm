@@ -11,14 +11,8 @@
     </header>
     <ServiceTable :services="data"
                   :city="city"
-                  @handleCityFilter="handleCityFilter"
-    />
-    <div v-if="getLoading"
-         class="spinner-border"
-         role="status">
-      <span class="sr-only">Loading...</span>
-    </div>
-
+                  @handleCityFilter="handleCityFilter"/>
+    <Loading v-if="getLoading"/>
     <div class="change-page-buttons">
       <button :disabled="this.service.page === 1"
               @click="handlePagination('first')">&lt&lt</button>
@@ -36,9 +30,10 @@
 <script>
   import ServiceTable from "@/components/ServiceTable";
   import SearchBar from "@/components/SearchBar";
+  import Loading from "@/components/Loading";
   export default {
     name: "Home",
-    components: {SearchBar, ServiceTable},
+    components: {Loading, SearchBar, ServiceTable},
     data () {
       return {
         service: {
@@ -124,7 +119,6 @@
         this.$store.dispatch('logout')
       },
       handleCityFilter(value) {
-        console.log(value)
           const cities = Object.keys(value).map(key => value[key])
           // const params = `&city=${cities.join(',')}`
           const query = {...this.service, page:1, address: cities.join(',')}
@@ -137,14 +131,6 @@
           this.$store.dispatch('data', query)
       }
     },
-
-    // watch: {
-    //   address(newValue, oldValue){
-    //     console.log('new:', newValue)
-    //     console.log('old:', oldValue)
-    //   }
-    //
-    // }
   }
 </script>
 

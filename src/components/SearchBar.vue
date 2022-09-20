@@ -5,7 +5,9 @@
            placeholder="Cauta dupa nume sau telefon">
     <button
           @click="handleResetSearch"
-          id="reset-button">X</button>
+          id="reset-button">
+      RESET
+    </button>
     <button
           @click="handleSearch"
           id="search-button">
@@ -50,8 +52,15 @@
       height: auto;
       background-color: white;
       position: absolute;
-      top: 42px;
+      top: 45px;
       right: 225px;
+      color: $light-grey;
+      font-size: 10px;
+      margin-left: 390px ;
+      &:hover{
+        color: $medium-grey;
+      }
+
     }
     input{
       width: 1250px;

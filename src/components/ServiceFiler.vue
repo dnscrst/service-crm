@@ -8,7 +8,6 @@
            :id="item"
            @click="takeData(item)">
        {{ item }}
-
      </label><br>
      <button type="button"
              @click="handleSendFilter"
@@ -20,34 +19,32 @@
 </template>
 
 <script>
-import {indexOf} from "core-js/internals/array-includes";
-
-export default {
-  name: "ServiceFiler",
-  props: {
-    data: Array
-  },
-  data() {
-    return{
-      selectedFilter: []
+  export default {
+    name: "ServiceFiler",
+    props: {
+      data: Array
+    },
+    data() {
+      return{
+        selectedFilter: []
+      }
+    },
+    methods: {
+      takeData(value) {
+        const checkbox = document.getElementById(value)
+        if(checkbox.checked) {
+          this.selectedFilter.push(value)
+        }
+        else {
+          this.selectedFilter.splice(this.selectedFilter.indexOf(value),1)
+        }
+        this.$emit('handleSelectCheckBox', this.selectedFilter)
+      },
+      handleSendFilter(){
+        this.$emit('handleSendFilter')
+      },
     }
-  },
-  methods: {
-    takeData(value) {
-      const checkbox = document.getElementById(value)
-      if(checkbox.checked) {
-        this.selectedFilter.push(value)
-      }
-      else {
-        this.selectedFilter.splice(this.selectedFilter.indexOf(value),1)
-      }
-      this.$emit('handleSelectCheckBox', this.selectedFilter)
-    },
-    handleSendFilter(){
-      this.$emit('handleSendFilter')
-    },
   }
-}
 </script>
 
 <style lang="scss">
@@ -60,14 +57,11 @@ export default {
    padding: 15px;
    box-shadow: 0 5px 10px rgb(50 50 50 / 25%);
    position: relative;
-
-
    form{
      display: flex;
      flex-direction: column;
      flex-wrap: wrap;
      max-height: 400px;
-
      label{
        margin-right: 20px;
        &:first-child{
@@ -91,6 +85,9 @@ export default {
        margin: 0;
        width: 70px;
        height: 28px;
+       position: absolute;
+       top: 380px;
+       right: 95px;
        &:hover,
        &:focus {
          background-color: #07c;
@@ -102,18 +99,7 @@ export default {
          background-color: #0064bd;
          box-shadow: none;
        }
-       .filter-button{
-         position: absolute;
-         top: 380px;
-         right: 105px;
-       }
-       .reset-button{
-         position: absolute;
-         top: 380px;
-         right: 85px;
-       }
      }
    }
  }
-
 </style>

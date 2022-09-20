@@ -7,7 +7,8 @@
       <th class="city-filter">Oraș, județ
           <button @click="handleFilter('onCityFilter')">
             <img alt="up-down-arrow"
-                 src='../assets/search-arrow.png'></button>
+                 src='../assets/search-arrow.png'>
+          </button>
           <ServiceFiler v-if="onCityFilter"
                         :data="city"
                         @handleSelectCheckBox="handleSelectCheckbox"
@@ -16,7 +17,6 @@
                   id="reset-filer">
             RESET
           </button>
-
       </th>
       <th class="last-column">Status</th>
     </tr>
@@ -98,8 +98,8 @@
       th {
         border: white;
         position: relative;
+        padding-left: 5px;
         button, img {
-          padding: 0 !important;
           display: inline-block;
         }
         .filer-container {
@@ -133,6 +133,7 @@
       box-shadow: 0 2px 5px rgb(50 50 50 / 25%);
       td {
         font-weight: 600;
+        padding-left: 5px;
       }
     }
 
@@ -155,10 +156,8 @@
         height: 30px;
         border: none;
         background-color: $light-grey;
-
       }
     }
-
     .service-status {
       position: absolute;
       z-index: 99;

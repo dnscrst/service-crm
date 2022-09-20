@@ -39,7 +39,6 @@
       <button @click="handleUpdateDetails" >OK</button>
       <button @click="handleClose">Cancel</button>
     </div>
-
   </div>
 </template>
 
@@ -77,72 +76,80 @@ export default {
 </script>
 
 <style lang="scss">
-.service-status{
-  background-color: white;
-  width: 393px;
-  height: 220px;
-  margin: 5% 30%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  padding: 25px;
-  box-shadow: 0 5px 10px rgb(50 50 50 / 25%);
-  .contact-status{
+  @import '../styles/base.scss';
+  @import '../styles/vars.scss';
+  .service-status{
+    background-color: white;
+    width: 393px;
+    height: 220px;
+    margin: 5% 30%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    span{
-      margin-bottom: 8px;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    padding: 25px;
+    box-shadow: 0 5px 10px rgb(50 50 50 / 25%);
+    .contact-status{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      span{
+        margin-bottom: 8px;
+      }
+      input{
+        margin-left: 50px;
+      }
     }
-    input{
-      margin-left: 50px;
+    .data-status{
+      label{
+        margin-right: 8px;
+      }
+      input{
+        color: inherit;
+      }
+    }
+    #exit-button{
+      position: absolute;
+      top: 3px;
+      right: 10px;
+      border: none;
+      background-color: inherit;
+      &:hover{
+        transform: scale(1);
+      }
+    }
+    textarea{
+      resize: none;
+      padding: 5px 10px;
+      width: 100%;
+      margin: 15px 0;
+    }
+    .status-buttons{
+      margin-left: auto;
+      button{
+        margin-left: 15px;
+        width: 70px;
+        padding: 3px 5px;
+        border: 1px solid;
+        border-radius: 5px;
+        color: $dark-grey;
+        font-weight: 600;
+        font-size: 13px;
+      }
+      :first-child{
+        border-color: #55e0a3;
+        background-color: #55e0a3;
+        &:hover{
+          background-color: #6af79a;
+        }
+      }
+      :last-child{
+        border-color: #ffaaa5;
+        background-color: #ffaaa5;
+        &:hover{
+          background-color: #ff6464;
+        }
+      }
     }
   }
-  .data-status{
-    label{
-      margin-right: 8px;
-    }
-    input{
-      color: inherit;
-    }
-  }
-  #exit-button{
-    position: absolute;
-    top: 3px;
-    right: 10px;
-    border: none;
-    background-color: inherit;
-    &:hover{
-      transform: scale(1);
-    }
-  }
-  textarea{
-    resize: none;
-    padding: 5px 10px;
-    width: 100%;
-    margin: 15px 0;
-  }
-  .status-buttons{
-    margin-left: auto;
-    button{
-      margin-left: 15px;
-      width: 70px;
-      padding: 3px 5px;
-      border: 1px solid;
-      border-radius: 5px;
-
-    }
-    :first-child{
-      border-color: #55e0a3;
-      background-color: #55e0a3;
-    }
-    :last-child{
-      border-color: #ffaaa5;
-      background-color: #ffaaa5;
-
-    }
-  }
-}
-
 </style>
