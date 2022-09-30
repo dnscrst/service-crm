@@ -60,7 +60,6 @@
       &:hover{
         color: $medium-grey;
       }
-
     }
     input{
       width: 1250px;

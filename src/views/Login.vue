@@ -60,8 +60,6 @@ export default {
     padding: 46px 32px;
     margin-bottom: 60px;
     justify-content: center;
-
-
     h1{
       text-align: center;
       margin: 0 0 20px;

@@ -2,7 +2,7 @@
   <div class="home-page">
     <header class="header">
       <SearchBar @handle-search="handleSearch"/>
-      <button @click="logout"
+      <button @click="handleLogout"
               id="logout-button"
               type="button">
         <img src="../assets/logout-img.png"
@@ -18,7 +18,9 @@
               @click="handlePagination('first')">&lt&lt</button>
       <button :disabled="this.service.page === 1"
               @click="handlePagination('back')"> &lt</button>
+
       <span>{{service.page}}</span>
+
       <button :disabled="this.service.page === this.data.pages"
               @click="handlePagination('next')">&gt</button>
       <button :disabled="this.service.page === this.data.pages"
@@ -44,21 +46,18 @@
           status: "",
           page: 1
         },
-        city: ['Alba', 'Arad', 'Arges', 'Bacau', 'Bihor', 'Bistrita-Nasaud',
-          'Botosani', 'Braila', 'Brasov', 'Buzau', 'Calarasi', 'Caras-Severin',
-          'Cluj', 'Constanta', 'Covasna', 'Dambovita', 'Dolj', 'Galati', 'Giurgiu',
-          'Gorj', 'Harghita', 'Hunedoara', 'Ialomita', 'Iasi', 'Ilfov', 'Maramures',
-          'Mehedinti', 'Mures', 'Neamt', 'Olt', 'Prahova', 'Salaj', 'Satu Mare', 'Sibiu',
-          'Suceava', 'Teleorman', 'Timis', 'Tulcea', 'Vaslui', 'Valcea', 'Vrancea'],
         filters: {}
       }
     },
     computed: {
-       data () {
+      data () {
          return this.$store.state.data.service
-       },
-        getLoading () {
+      },
+      getLoading () {
          return this.$store.state.data.loading
+      },
+      city() {
+         return this.$store.state.city
       }
     },
 
@@ -115,7 +114,7 @@
         this.$store.dispatch('data', this.service)
 
       },
-      logout(){
+      handleLogout(){
         this.$store.dispatch('logout')
       },
       handleCityFilter(value) {
@@ -148,7 +147,6 @@
       justify-content: space-between;
       align-items: flex-start;
       margin-top: auto;
-
       #logout-button {
         border: none;
         background-color: $light-grey;
@@ -172,12 +170,10 @@
       margin-bottom: auto;
       text-align: center;
       font-size: 16px;
-
       button {
         border: 0;
         margin: 0 3px;
       }
-
       span {
         margin: 0 5px;
       }
