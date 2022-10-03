@@ -28,7 +28,7 @@ export const actions = {
             next('/login')
         }
     },
-    async logout ({commit}, user){
+    async logout (){
         try{
             await axios.delete(api.logout);
             await router.push('/login');

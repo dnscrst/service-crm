@@ -26,7 +26,8 @@
    </div>
     <div class="data-status">
       <label >Data:</label>
-      <input type="date" v-model="details.date">
+      <input type="date"
+             v-model="details.date">
     </div>
     <button @click="handleClose"
             id="exit-button">

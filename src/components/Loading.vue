@@ -1,87 +1,59 @@
 <template>
-  <svg class="loading-spinner">
-    <circle
-        :cx="circlePositions[index] && circlePositions[index].x"
-        :cy="circlePositions[index] && circlePositions[index].y"
-        :r="item.radius"
-        :fill="item.color"
-        v-for="(item, index) in circles"
-        :key="index"/>
-  </svg>
+  <div class="loader-wrapper">
+    <div class="loader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
 </template>
 
 <script>
-  const CENTER_X = 50;
-  const CENTER_Y = 50;
-  const RADIUS = 20;
-
-  function positionOnCircle(radius, angle, center) {
-    return {
-      x: center.x + (radius * Math.cos(toRadians(angle))),
-      y: center.y + (radius * Math.sin(toRadians(angle)))
-    };
-  };
-
-  function toRadians(angle) {
-    return angle * Math.PI / 180;
-  };
-
-  function calculatePositions(component) {
-    let angleIncrement = 360 / component.circles.length;
-    let positions = {};
-    component.circles.forEach((circle, index) => {
-      positions[index] = positionOnCircle(
-          RADIUS,
-          angleIncrement * index,
-          {x: CENTER_X, y: CENTER_Y}
-      )
-    });
-    return positions;
-  }
-
-  export default {
-    name: 'Loading',
-    data() {
-      return {
-        circles: [
-          {color: '#707070', radius: 0},
-          {color: '#707070', radius: 0},
-          {color: '#707070', radius: 0},
-          {color: '#707070', radius: 0},
-          {color: '#707070', radius: 0},
-          {color: '#707070', radius: 0},
-          {color: '#707070', radius: 0},
-          {color: '#707070', radius: 0},
-          {color: '#707070', radius: 0},
-        ],
-        counter: 0,
-        interval: null
-      }
-    },
-    computed: {
-      circlePositions: calculatePositions
-    },
-    created() {
-      this.interval = setInterval(() => {
-        this.counter++;
-        this.circles = this.circles.map((item, index) => ({
-          ...item,
-          radius: (this.counter + index) % 8
-        }));
-      },80);
-    },
-    destroyed() {
-      clearInterval(this.interval);
-    }
-  }
+export default {
+  name: 'Loader',
+}
 </script>
 
-<style scoped>
-  @import '../styles/base.scss';
+<style lang="scss">
   @import '../styles/vars.scss';
-  .loading-spinner {
-    width: 100px;
-    height: 100px;
-    margin: 13% auto;
+  .loader-wrapper {
+    text-align: center;
+    margin: 13.7% 0;
+    .loader {
+      display: inline-block;
+      position: relative;
+      width: 80px;
+      height: 80px;
+      div {
+        box-sizing: border-box;
+        display: block;
+        position: absolute;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border: 8px solid;
+        border-radius: 50%;
+        animation: loader 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        border-color: $medium-grey transparent transparent transparent;
+      }
+      :nth-child(1) {
+        animation-delay: -0.45s;
+      }
+      :nth-child(2) {
+        animation-delay: -0.3s;
+      }
+      :nth-child(3) {
+        animation-delay: -0.15s;
+      }
+      @keyframes loader {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+    }
   }
 </style>
